@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinetix Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Link external stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static',filename='site.css')}}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </head>
+  <body>
+    {% include 'header.html' %}
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Curated for gifting</span>
+            <h1>Big Smile for Little Adventurers.</h1>
+            <p>
+             Handpicked toys designed to bring joy, laughter, and endless excitement to kids of all ages.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-btn" href="/products">Explore Collection</a>
+              <a class="secondary-btn" href="#about">Learn More</a>
+            </div>
+
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <strong>10k+</strong>
+                <span>Happy customers</span>
+              </div>
+              <div class="mini-stat">
+                <strong>4.9/5</strong>
+                <span>Average rating</span>
+              </div>
+              <div class="mini-stat">
+                <strong>200+</strong>
+                <span>Designer styles</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="image-card">
+              <!--<img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Elegant fashion portrait" />-->
+           <img src="/static/images/toystorebanner.jpg?auto=format" alt="Kinetix Toy Store" />
+            </div>
+            <div class="floating-badge">
+              <strong>30% off</strong>
+              <span>Festive collection</span>
+            </div>
+          </div>
+        </div>
+      </section>
+ 
+      <section class="section" id="collections">
+        <div class="container carousel">
+          <div class="section-header">
+            <h2>Shop by category</h2>
+            <a href="/categories">View all</a>
+          </div>
+          <div class="category-grid ">
+             {% for category in categories %}
+                
+                 {% if  category.url %}
+                 <div class="category-card conditional-item">
+                    <img href="/products?c={{ category.name }}" src="/static/images/{{ category.url }}" alt="{{ category.name }}" />
+                    <div class="category-overlay">
+                      <h3><a href="/products/{{ category.id }}_{{ category.name }}" method="post">{{ category.name }}</a></h3>
+                    </div>
+                  </div>
+                
+                   {% endif %}     
+            {% endfor %}
+                      
+          </div>
+          <style>
+    /* CSS logic: Hide every matching card after the first 4 */
+    .conditional-item:nth-of-type(n+5) {
+        display: none !important;
+    }
+</style>
+        </div>
+      </section>
+
+
+      <section class="section" id="shop">
+        <div class="container">
+          <div class="section-header">
+            <h2>{% if page == 'products' %}All products{% else %}Featured products{% endif %}</h2>
+            <a href="/products?s=featured">See more</a>
+          </div>
+
+          <div class="product-grid">
+            {% for product in products %}
+            <article class="product-card">
+              <div class="product-media">
+                 <!-- Checks both the integer 1 and the string character "1" -->
+                 {% if product.featured == 1 or product.featured|string == '1' %}
+                <span class="tag">Featured</span>
+                {% endif %}
+                <a href="/products/{{ product.id }}">
+                  <img src="{{ product.image_url }}" alt="{{ product.name }}" />
+                </a>
+              </div>
+              <div class="product-body">
+                <h3><a href="/products/{{ product.id }}">{{ product.name }}</a></h3>
+                <div class="rating">★★★★★</div>
+                <div class="price-row">
+                  <div class="price">
+                    <strong>PKR {{ "%.0f"|format(product.price|float) }}</strong>
+                    <span>PKR {{ "%.0f"|format((product.price * 1.35)|float) }}</span>
+                  </div>
+                  <form class="cart-form" method="post" action="/add_to_cart">
+                    <input type="hidden" name="product_name" value="{{ product.name }}" />
+                    <input type="hidden" name="product_price" value="{{ product.price }}" />
+                    <input type="hidden" name="next" value="{{ request.path }}" />
+                    <button type="submit" class="cart-btn" aria-label="Add {{ product.name }} to cart">+</button>
+                  </form>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="specials">
+        <div class="container">
+          <div class="feature-band">
+            <div class="feature-grid">
+              <div class="feature-item">
+                <div class="icon">⚡</div>
+                <h3>Fast delivery</h3>
+                <p>Nationwide shipping with secure packaging for every order.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">💎</div>
+                <h3>Premium quality</h3>
+                <p>Finely selected categories and attention to craftsmanship.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">🎁</div>
+                <h3>Gift-ready</h3>
+                <p>Beautiful packaging and thoughtful touches for special moments.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">🔒</div>
+                <h3>Trusted service</h3>
+                <p>Customer-focused shopping experience with easy returns.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section promo" id="about">
+        <div class="container promo-inner">
+          <div class="promo-copy">
+            <span class="eyebrow" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.15);">This season</span>
+            <h2>Free Shipping Alert: Fun Delivered Straight to Your Door!</h2>
+            <p>
+              Skip the delivery fees and let us bring the excitement straight to your living room. Fill your cart with your child's favorite toys, games, 
+              and puzzles—spend Rs. 5,000 or more and enjoy 100% Free Doorstep Delivery anywhere in the country!
+            </p>
+            <a class="primary-btn" href="/products" style="background: #fff; color: var(--primary-deep);">Avail Free Shipping Offer</a>
+          </div>
+          <div class="promo-image">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Festive styled model" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="container">
+          <div class="section-header">
+            <h2>Customer love</h2>
+            <a href="#shop">Read more</a>
+          </div>
+
+          <div class="testimonial-grid">
+            <div class="quote-card">
+              <p>“The fabric quality is excellent and the packaging made it feel like a luxury gift. Will definitely shop again.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Ayesha K.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <p>“A perfect mix of style and comfort. The design looks premium and the fit felt just right for our event.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Hamza R.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <p>“The boutique vibe is beautiful and the collection feels curated with care. Great experience from start to finish.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Sana M.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    {% include 'footer.html' %}
+  </body>
+</html>
+

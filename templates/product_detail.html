@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{product.name}} - Kinetix Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Link external stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static',filename='site.css')}}"/>
+    <link rel="preconnect" href="/static/products.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/product_detail.css">
+</head>
+ <body>
+    {% include 'header.html' %}
+
+<main class="page-shell">
+    <div class="container">
+    <div class="page-header">
+        
+        <h1>Product Detail</h1>
+        <span class="eyebrow">{% if product.featured %}Featured{% else %}{{ product.category_name or 'General' }}{% endif %} collection</span>
+    </div>
+ 
+  <div class="product-detail-container">
+    
+    <!-- Gallery Column -->
+    <div class="product-gallery">
+      <div class="main-image-box">
+        <img id="mainImage" src="{{ product.image_url or '/static/images/placeholder.png' }}" alt="{{ product.name }}">
+      </div>
+
+      <div class="thumbnail-slider">
+        <!-- Main Image Thumbnail -->
+        <button type="button" class="thumb-btn active" onclick="switchImage(this, '{{ product.image_url }}')">
+          <img src="{{ product.image_url }}" alt="Thumbnail">
+        </button>
+        
+        <!-- Loop over additional images if passed from backend -->
+        {% if product.images %}
+          {% for img in product.images %}
+            <button type="button" class="thumb-btn" onclick="switchImage(this, '{{ img.url }}')">
+              <img src="{{ img }}" alt="Thumbnail">
+            </button>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Product Info Column -->
+    <div class="product-info">
+      <span class="product-category">{{ product.category_name or 'General' }}</span>
+      <h1>{{ product.name }}</h1>
+      <p class="product-price">PKR {{ "%.2f"|format(product.price) }}</p>
+      <p class="product-description">{{ product.description }}</p>
+      <!-- Cart Action Form -->
+      <form action="/add_to_cart" method="POST" class="cart-form">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="product_name" value="{{ product.name }}" />
+        <input type="hidden" name="product_price" value="{{ product.price }}" />
+        <input type="hidden" name="next" value="{{ request.path }}" />
+                 
+        <!-- Quantity Selector -->
+        <div class="quantity-selector">
+          <button type="button" class="qty-btn" onclick="decrementQty()">-</button>
+          <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" class="qty-input" readonly>
+          <button type="button" class="qty-btn" onclick="incrementQty()">+</button>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <button type="submit" class="add-to-cart-btn">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span>Add To Cart</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    /* Image Switcher Functionality */
+    function switchImage(thumbElement, imageSrc) {
+      const mainImage = document.getElementById('mainImage');
+      mainImage.style.opacity = '0.3';
+      
+      setTimeout(() => {
+        mainImage.src = imageSrc;
+        mainImage.style.opacity = '1';
+      }, 150);
+
+      document.querySelectorAll('.thumb-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      thumbElement.classList.add('active');
+    }
+
+    /* Quantity Adjustment Functions */
+    function incrementQty() {
+      const input = document.getElementById('quantity');
+      const max = parseInt(input.getAttribute('max')) || 99;
+      let currentValue = parseInt(input.value) || 1;
+      
+      if (currentValue < max) {
+        input.value = currentValue + 1;
+      }
+    }
+
+    function decrementQty() {
+      const input = document.getElementById('quantity');
+      let currentValue = parseInt(input.value) || 1;
+      
+      if (currentValue > 1) {
+        input.value = currentValue - 1;
+      }
+    }
+  </script>
+  {% include 'footer.html' %}
+</body>
+</html>
+           

@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saeed Ghani Inspired Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f5f0ea;
+        --panel: #fffdfb;
+        --primary: #8c1d1d;
+        --primary-deep: #5f0f14;
+        --secondary: #d1af7b;
+        --text: #1e1a18;
+        --muted: #625b57;
+        --line: rgba(30, 26, 24, 0.08);
+        --shadow: 0 18px 45px rgba(58, 18, 18, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        background: var(--primary-deep);
+        color: #fff;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .topbar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 0;
+      }
+
+      .topbar-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 82px;
+        gap: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), #b73d3d);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 1.1rem;
+      }
+
+      .brand-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 2vw, 2.5rem);
+        letter-spacing: 0.02em;
+        font-weight: 700;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .icon-button,
+      .primary-btn,
+      .secondary-btn {
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .icon-button {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #f7efe7;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        padding: 0 24px;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .primary-btn {
+        background: linear-gradient(135deg, var(--primary), #b54343);
+        color: #fff;
+        box-shadow: 0 12px 20px rgba(107, 17, 17, 0.18);
+      }
+
+      .secondary-btn {
+        background: transparent;
+        color: var(--primary-deep);
+        border: 1px solid rgba(140, 29, 29, 0.25);
+      }
+
+      .icon-button:hover,
+      .primary-btn:hover,
+      .secondary-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .hero {
+        padding: 48px 0 32px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .hero-copy {
+        padding: 24px 0;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(140, 29, 29, 0.08);
+        color: var(--primary);
+        border: 1px solid rgba(140, 29, 29, 0.12);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-weight: 700;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        margin: 22px 0 16px;
+        font-size: clamp(2.8rem, 5vw, 5rem);
+        line-height: 0.94;
+        letter-spacing: -0.06em;
+        font-weight: 800;
+      }
+
+      .hero-copy p {
+        margin: 0;
+        max-width: 560px;
+        font-size: 1.04rem;
+        line-height: 1.82;
+        color: var(--muted);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 30px;
+      }
+
+      .mini-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+        gap: 18px;
+        margin-top: 32px;
+      }
+
+      .mini-stat {
+        padding: 18px 16px;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+
+      .mini-stat strong {
+        display: block;
+        font-size: 1.5rem;
+        color: var(--primary-deep);
+      }
+
+      .mini-stat span {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .hero-visual {
+        position: relative;
+      }
+
+      .image-card {
+        position: relative;
+        border-radius: 34px;
+        overflow: hidden;
+        min-height: 560px;
+        background: linear-gradient(145deg, #f0d7a8, #d9b884);
+        box-shadow: var(--shadow);
+      }
+
+      .image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .floating-badge {
+        position: absolute;
+        bottom: 24px;
+        left: 24px;
+        background: rgba(255,255,255,0.94);
+        border: 1px solid rgba(30,26,24,0.05);
+        border-radius: 20px;
+        padding: 18px 20px;
+        box-shadow: 0 14px 30px rgba(20, 20, 20, 0.08);
+      }
+
+      .floating-badge strong {
+        display: block;
+        font-size: 2rem;
+        color: var(--primary);
+      }
+
+      .floating-badge span {
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+
+      .section {
+        padding: 28px 0 20px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: clamp(2rem, 2vw, 3rem);
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: -0.04em;
+      }
+
+      .section-header a {
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .category-card {
+        position: relative;
+        border-radius: 26px;
+        overflow: hidden;
+        min-height: 260px;
+        background: #e9d8b9;
+        box-shadow: 0 14px 25px rgba(32, 24, 21, 0.05);
+      }
+
+      .category-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .category-overlay {
+        position: absolute;
+        inset: auto 0 0 0;
+        background: linear-gradient(180deg, transparent, rgba(26, 13, 13, 0.72));
+        padding: 20px;
+        color: #fff;
+      }
+
+      .category-overlay h3 {
+        margin: 0;
+        font-size: 1.35rem;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .product-card {
+        background: rgba(255,255,255,0.86);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 14px 28px rgba(54, 35, 28, 0.04);
+      }
+
+      .product-media {
+        position: relative;
+        padding: 14px 14px 0;
+      }
+
+      .product-media img {
+        border-radius: 18px;
+        height: 240px;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .tag {
+        position: absolute;
+        left: 24px;
+        top: 24px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 7px 10px;
+        border-radius: 999px;
+      }
+
+      .product-body {
+        padding: 18px 18px 20px;
+      }
+
+      .product-body h3 {
+        margin: 0 0 6px;
+        font-size: 1.08rem;
+      }
+
+      .rating {
+        color: #ffb547;
+        letter-spacing: 0.1em;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+      }
+
+      .price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+      }
+
+      .price {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+      }
+
+      .price strong {
+        font-size: 1.35rem;
+        color: var(--primary-deep);
+      }
+
+      .price span {
+        text-decoration: line-through;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .cart-btn {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        background: #f8e8d8;
+        color: var(--primary);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
+      .feature-band {
+        background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        padding: 30px 24px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .feature-item {
+        padding: 18px;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+      }
+
+      .feature-item .icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #f7e5cf, #f4d9a8);
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+      }
+
+      .feature-item h3 {
+        margin: 0 0 8px;
+        font-size: 1.08rem;
+      }
+
+      .feature-item p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 0.92rem;
+      }
+
+      .promo {
+        margin-top: 52px;
+        background: linear-gradient(135deg, #1d0d0a, #5a1315 40%, #8e1f1f 100%);
+        border-radius: 32px;
+        color: white;
+        overflow: hidden;
+      }
+
+      .promo-inner {
+        display: grid;
+        grid-template-columns: 1fr 0.9fr;
+      }
+
+      .promo-copy {
+        padding: 46px 40px;
+      }
+
+      .promo-copy h2 {
+        margin: 0 0 18px;
+        font-size: clamp(2.2rem, 3vw, 3.4rem);
+        font-family: "Cormorant Garamond", serif;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .promo-copy p {
+        margin: 0 0 28px;
+        max-width: 540px;
+        color: rgba(255,255,255,0.78);
+        line-height: 1.8;
+      }
+
+      .promo-image {
+        min-height: 330px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+      }
+
+      .promo-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .quote-card {
+        background: rgba(255,255,255,0.8);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 26px 22px;
+      }
+
+      .quote-card p {
+        margin: 0 0 24px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .customer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #d8b387, #b26a56);
+      }
+
+      .customer strong {
+        display: block;
+        font-size: 0.98rem;
+      }
+
+      .customer span {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      footer {
+        background: #1b140f;
+        color: rgba(255,255,255,0.75);
+        margin-top: 54px;
+      }
+
+      .footer-inner {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr;
+        gap: 24px;
+        padding: 50px 0 22px;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .footer-brand .brand-mark {
+        width: 42px;
+        height: 42px;
+      }
+
+      .footer-brand .brand-text {
+        font-size: 2rem;
+        color: #fff;
+      }
+
+      .footer p,
+      .footer li,
+      .footer a {
+        color: rgba(255,255,255,0.7);
+        line-height: 1.9;
+        font-size: 0.92rem;
+      }
+
+      .footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 18px 0 30px;
+        text-align: center;
+        color: rgba(255,255,255,0.6);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .promo-inner,
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .category-grid,
+        .product-grid,
+        .feature-grid,
+        .testimonial-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar-inner {
+          flex-direction: column;
+          text-align: center;
+          padding: 10px 0;
+        }
+
+        .nav {
+          min-height: 72px;
+        }
+
+        .brand-text {
+          font-size: 1.7rem;
+        }
+
+        .category-grid,
+        .product-grid,
+        .feature-grid,
+        .testimonial-grid,
+        .mini-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 18px;
+        }
+
+        h1 {
+          letter-spacing: -0.05em;
+        }
+
+        .image-card {
+          min-height: 420px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <span>Free shipping on orders over PKR 4,500</span>
+        <div class="topbar-links">
+          <span>New Arrivals</span>
+          <span>Wedding Collection</span>
+        </div>
+      </div>
+    </div>
+
+    <header class="header">
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-mark">SG</div>
+          <div class="brand-text">Saeed Ghani</div>
+        </div>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="products.py">Shop</a>
+          <a href="#collections">Collections</a>
+          <a href="#specials">Specials</a>
+          <a href="#about">About</a>
+          <a href="#reviews">Reviews</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="icon-button" aria-label="Search">⌕</button>
+          <button class="icon-button" aria-label="Cart">🛒</button>
+          <a class="primary-btn" href="products.py">Shop Now</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Curated for gifting</span>
+            <h1>Luxury essentials for every celebration.</h1>
+            <p>
+              Discover premium apparel, festive wear, thoughtful gifting and handcrafted accessories
+              designed to bring warmth, style and tradition into every occasion.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-btn" href="products.html">Explore Collection</a>
+              <a class="secondary-btn" href="#about">Learn More</a>
+            </div>
+
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <strong>10k+</strong>
+                <span>Happy customers</span>
+              </div>
+              <div class="mini-stat">
+                <strong>4.9/5</strong>
+                <span>Average rating</span>
+              </div>
+              <div class="mini-stat">
+                <strong>200+</strong>
+                <span>Designer styles</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="image-card">
+              <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Elegant fashion portrait" />
+            </div>
+            <div class="floating-badge">
+              <strong>30% off</strong>
+              <span>Festive collection</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="collections">
+        <div class="container">
+          <div class="section-header">
+            <h2>Shop by category</h2>
+            <a href="#shop">View all</a>
+          </div>
+
+          <div class="category-grid">
+            <div class="category-card">
+              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Women's kurta" />
+              <div class="category-overlay">
+                <h3>Women</h3>
+              </div>
+            </div>
+            <div class="category-card">
+              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80" alt="Classic menswear" />
+              <div class="category-overlay">
+                <h3>Men</h3>
+              </div>
+            </div>
+            <div class="category-card">
+              <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Accessories" />
+              <div class="category-overlay">
+                <h3>Accessories</h3>
+              </div>
+            </div>
+            <div class="category-card">
+              <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Gifting" />
+              <div class="category-overlay">
+                <h3>Gifts</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="shop">
+        <div class="container">
+          <div class="section-header">
+            <h2>Featured products</h2>
+            <a href="products.html">See more</a>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card">
+              <div class="product-media">
+                <span class="tag">Sale</span>
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80" alt="Cotton silk shalwar" />
+              </div>
+              <div class="product-body">
+                <h3>Classic Cotton Kurta</h3>
+                <div class="rating">★★★★★</div>
+                <div class="price-row">
+                  <div class="price">
+                    <strong>PKR 2,299</strong>
+                    <span>PKR 3,200</span>
+                  </div>
+                  <button class="cart-btn" aria-label="Add to cart">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-media">
+                <span class="tag">New</span>
+                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Premium festive suit" />
+              </div>
+              <div class="product-body">
+                <h3>Elegant Festive Suit</h3>
+                <div class="rating">★★★★★</div>
+                <div class="price-row">
+                  <div class="price">
+                    <strong>PKR 3,499</strong>
+                    <span>PKR 4,800</span>
+                  </div>
+                  <button class="cart-btn" aria-label="Add to cart">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-media">
+                <span class="tag">Hot</span>
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Handmade dupatta" />
+              </div>
+              <div class="product-body">
+                <h3>Handcrafted Dupatta</h3>
+                <div class="rating">★★★★★</div>
+                <div class="price-row">
+                  <div class="price">
+                    <strong>PKR 1,799</strong>
+                    <span>PKR 2,400</span>
+                  </div>
+                  <button class="cart-btn" aria-label="Add to cart">+</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card">
+              <div class="product-media">
+                <span class="tag">Bestseller</span>
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Luxury gifting box" />
+              </div>
+              <div class="product-body">
+                <h3>Luxury Gift Set</h3>
+                <div class="rating">★★★★★</div>
+                <div class="price-row">
+                  <div class="price">
+                    <strong>PKR 4,299</strong>
+                    <span>PKR 5,500</span>
+                  </div>
+                  <button class="cart-btn" aria-label="Add to cart">+</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="specials">
+        <div class="container">
+          <div class="feature-band">
+            <div class="feature-grid">
+              <div class="feature-item">
+                <div class="icon">⚡</div>
+                <h3>Fast delivery</h3>
+                <p>Nationwide shipping with secure packaging for every order.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">💎</div>
+                <h3>Premium quality</h3>
+                <p>Finely selected fabrics and attention to craftsmanship.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">🎁</div>
+                <h3>Gift-ready</h3>
+                <p>Beautiful packaging and thoughtful touches for special moments.</p>
+              </div>
+              <div class="feature-item">
+                <div class="icon">🔒</div>
+                <h3>Trusted service</h3>
+                <p>Customer-focused shopping experience with easy returns.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section promo" id="about">
+        <div class="container promo-inner">
+          <div class="promo-copy">
+            <span class="eyebrow" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.15);">This season</span>
+            <h2>Style that feels festive, elegant and effortless.</h2>
+            <p>
+              From refined formalwear to thoughtful everyday essentials, our collection blends timeless design
+              with modern comfort, making every purchase memorable and meaningful.
+            </p>
+            <a class="primary-btn" href="products.html" style="background: #fff; color: var(--primary-deep);">Browse special offers</a>
+          </div>
+          <div class="promo-image">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Festive styled model" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="container">
+          <div class="section-header">
+            <h2>Customer love</h2>
+            <a href="#shop">Read more</a>
+          </div>
+
+          <div class="testimonial-grid">
+            <div class="quote-card">
+              <p>“The fabric quality is excellent and the packaging made it feel like a luxury gift. Will definitely shop again.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Ayesha K.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <p>“A perfect mix of style and comfort. The design looks premium and the fit felt just right for our event.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Hamza R.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <p>“The boutique vibe is beautiful and the collection feels curated with care. Great experience from start to finish.”</p>
+              <div class="customer">
+                <div class="avatar"></div>
+                <div>
+                  <strong>Sana M.</strong>
+                  <span>Verified buyer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="footer-brand">
+            <div class="brand-mark">SG</div>
+            <div class="brand-text">Saeed Ghani</div>
+          </div>
+          <p>Curated fashion, gifting and lifestyle pieces designed for heartfelt moments and everyday elegance.</p>
+        </div>
+
+        <div>
+          <h3>Quick links</h3>
+          <ul>
+            <li><a href="#shop">New arrivals</a></li>
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#specials">Special offers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li>+92 300 1234567</li>
+            <li>hello@saeedghani.com</li>
+            <li>Lahore, Pakistan</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container footer-bottom">
+        © 2026 Saeed Ghani. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>
+

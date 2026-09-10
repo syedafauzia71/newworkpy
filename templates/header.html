@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="/static/header.css">
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span>Free shipping on orders over PKR 5000</span>
+    <div class="topbar-links">
+      <span><a href="/home">Home</a></span>
+      <span><a href="/products?s=newarr">New Arrivals</a></span>
+      <span><a href="/products?s=age">Shop by Age</a></span>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container nav">
+    <a href="/" class="brand" aria-label="Go to home page">
+      <div class="brand-mark">KNTX</div>
+      <div class="brand-text">Kinetix</div>
+    </a>
+<!--trying new menu-->
+  <nav class="nav-menu">
+  {% for category in menu_categories %}
+    
+    <!-- If category has subcategories, wrap in dropdown container -->
+    {% if category.submenus and category.submenus|length > 0 %}
+      <div class="nav-item dropdown">
+        <a href="/products?{{ category.id }}_{{ category.name }}" class="nav-link dropdown-toggle">
+          {{ category.name }} 
+        </a>
+        
+        <!-- Submenu dropdown hidden by default -->
+        <div class="dropdown-menu">
+          {% for sub in category.submenus %}
+            <a href="/products?{{ sub.id }}_{{ sub.name }}" class="dropdown-item">
+              {{ sub.name }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <!-- Top-level link without subcategories -->
+      <a href="/products?{{ category.id }}_{{ category.name }}" class="nav-link">
+        {{ category.name }} .
+      </a>
+    {% endif %}
+
+  {% endfor %}
+</nav><!--trying new menu-->
+
+    <div class="nav-actions">
+      <form class="search-form" action="/products" method="get">
+        <button class="icon-button" type="submit" aria-label="Search">⌕</button>
+        <input class="search-input" type="search" name="q" value="{{ search_query or '' }}" placeholder="Search toys" aria-label="Search products" />
+      </form>
+      <a class="cart-button" href="/cart" aria-label="Cart">
+        🛒
+        <span class="cart-count">{{ cart_count or 0 }}</span>
+      </a>
+    </div>
+  </div>
+</header>

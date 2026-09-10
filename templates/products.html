@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinetix Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Link external stylesheet -->
+    <link rel="stylesheet" href="{{url_for('static',filename='site.css')}}"/>
+    <link rel="preconnect" href="/static/products.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+      /* pagination css */
+ .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 30px 0;
+}
+
+.pagination-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  
+  /* Inactive: Ash Black text + Soft Cream background */
+  color: #2c2c2c;
+  background-color: #fbeee6;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.pagination-item:hover:not(.active):not(.disabled) {
+  background-color: #f5dfd3;
+  color: #000000;
+}
+
+/* Active Page: Deep Maroon text */
+.pagination-item.active {
+  color: #800020;
+  background-color: #fbeee6;
+  border: 1.5px solid #800020;
+  font-weight: 700;
+}
+
+/* Disabled Prev/Next links */
+.pagination-item.disabled {
+  color: #a0a0a0;
+  background-color: #f7f7f7;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+  </style>
+  </head>
+  <body>
+    {% include 'header.html' %}
+
+
+    <main class="page-shell">
+      <div class="container">
+        <div class="page-header">
+          <span class="eyebrow">Curated collection</span>
+          {% set query = request.args.get('s') %}
+          {% if query == 'featured' %}
+            <h1>Featured Collection</h1>
+          {% elif query == 'newarr' %}
+            <h1>New Arrivals</h1>
+          {% elif query == 'age' %}
+            <h1>Shop by Age</h1>
+          {% else %}
+            <h1>Product Catalog</h1>
+          {% endif %}
+          <p>
+             Handpicked toys designed to bring joy, laughter, and endless excitement to kids of all ages.
+            </p>
+        </div>
+
+        <div class="grid">
+          {% for product in products %} 
+            {% set s = request.args.get('s') %}
+            {# Determine if this product meets the display criteria #}
+            {% set show_product = (not s) 
+                or (s == 'newarr' and product.newarr == 1) 
+                or (s == 'featured' and product.featured == 1) 
+                or (s == 'age') %}
+            {% if show_product %}
+          <article class="card">
+            <div class="card-media">
+                <!-- Checks both the integer 1 and the string character "1" -->
+                 {% if product.featured == 1 or product.featured|string == '1' %}
+                <span class="tag">Featured</span>
+                {% endif %}
+                <span class="tag">{{ product.age }} years</span>
+              <a href="/product/{{ product.id }}">
+                <img src="{{ product.image_url }}" alt="{{ product.name }}" />
+              </a>
+            </div>
+            <div class="card-body">
+              <h3><a href="/product/{{ product.id }}">{{ product.name }}</a></h3>
+              <div class="rating">★★★★★</div>
+              <div class="price-row">
+                <div class="price">
+                  <strong>PKR {{ "%.0f"|format(product.price|float) }}</strong>
+                  <span>PKR {{ "%.0f"|format((product.price * 1.35)|float) }}</span>
+                </div>
+                <form class="cart-form" method="post" action="/add_to_cart">
+                  <input type="hidden" name="product_name" value="{{ product.name }}" />
+                  <input type="hidden" name="product_price" value="{{ product.price }}" />
+                  <input type="hidden" name="next" value="{{ request.path }}" />
+                  <button type="submit" class="cart-btn" aria-label="Add {{ product.name }} to cart">+</button>
+                </form>
+              </div>
+            </div>
+          </article>
+          {% endif %}
+          {% endfor %}
+        </div>
+       <div class="pagination" aria-label="Product pagination">
+      {% if total_pages != 1 %} 
+        {% if prev_page %}
+          <a href="{{ url_for('show_products', **dict(request.args, page=prev_page)) }}" class="pagination-item">&laquo; Prev</a>
+        {% else %}
+          <span class="pagination-item disabled">&laquo; Prev</span>
+        {% endif %}
+
+        {% for page_num in range(1, total_pages + 1) %}
+          {% if page_num == current_page %}
+            <span class="pagination-item active">{{ page_num }}</span>
+          {% else %}
+            <a href="{{ url_for('show_products', **dict(request.args, page=page_num)) }}" class="pagination-item">{{ page_num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if next_page %}
+          <a href="{{ url_for('show_products', **dict(request.args, page=next_page)) }}" class="pagination-item">Next &raquo;</a>
+        {% else %}
+          <span class="pagination-item disabled">Next &raquo;</span>
+        {% endif %}
+      {% else %}
+        <span class="pagination-item active"> 1 </span> 
+      {% endif %} 
+    </div>
+      </div>
+    </main>
+
+    {% include 'footer.html' %}
+  </body>
+</html>
